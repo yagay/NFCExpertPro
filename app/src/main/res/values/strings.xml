@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">YNFC</string>
+    <string name="module_description">Advanced NFC Door Card Simulator for OxygenOS 16</string>
+</resources>
