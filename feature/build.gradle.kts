@@ -5,6 +5,9 @@ plugins {
 
 val configAuthority = providers.gradleProperty("ynfcConfigAuthority").orNull
     ?: "com.yagay.YNFC.config"
+val standaloneVersionCode = 57
+val runtimeVersionCode = providers.gradleProperty("ySuiteHostVersionCode")
+    .orNull?.toIntOrNull() ?: standaloneVersionCode
 
 android {
     namespace = "com.yagay.YNFC"
@@ -12,7 +15,7 @@ android {
 
     defaultConfig {
         minSdk = 31
-        buildConfigField("int", "VERSION_CODE", "57")
+        buildConfigField("int", "VERSION_CODE", runtimeVersionCode.toString())
         buildConfigField("String", "VERSION_NAME", "\"1.0.56\"")
         buildConfigField("int", "HOOK_BUILD", "40")
         buildConfigField("String", "CONFIG_AUTHORITY", "\"$configAuthority\"")
