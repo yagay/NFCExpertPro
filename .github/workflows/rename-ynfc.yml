@@ -44,6 +44,8 @@ jobs:
           for path in root.rglob('*'):
               if not path.is_file() or '.git' in path.parts:
                   continue
+              if len(path.parts) >= 2 and path.parts[0] == '.github' and path.parts[1] == 'workflows':
+                  continue
               try:
                   raw = path.read_bytes()
                   text = raw.decode('utf-8')
@@ -71,8 +73,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git grep -n -E 'com\.yagay\.nfcdoorcard|NFC门禁卡X|NFC Expert Pro|NfcDoorCard' -- . ':(exclude).github/workflows/rename-ynfc.yml'; then
-            echo 'Old project/package references remain.' >&2
+          if git grep -n -E 'com\.yagay\.nfcdoorcard|NFC门禁卡X|NFC Expert Pro|NfcDoorCard' -- . ':(exclude).github/workflows/**'; then
+            echo 'Old project/package references remain outside workflows.' >&2
             exit 1
           fi
           test -d app/src/main/java/com/yagay/YNFC
@@ -99,8 +101,12 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm -f .github/workflows/rename-ynfc.yml
+          test -z "$(git status --short .github/workflows)"
           git add -A
+          if git diff --cached --name-only | grep -q '^\.github/workflows/'; then
+            echo 'Workflow files must not be changed by this commit.' >&2
+            exit 1
+          fi
           git diff --cached --check
           git commit -m 'Rename NFC project and package to YNFC'
           git push origin HEAD:main
