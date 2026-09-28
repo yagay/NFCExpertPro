@@ -13,5 +13,5 @@ dependencyResolutionManagement {
         maven { url = uri("https://api.xposed.info/") }
     }
 }
-rootProject.name = "NfcDoorCard"
+rootProject.name = "YNFC"
 include(":app")

@@ -1,4 +1,4 @@
-# NFC Expert Pro
+# YNFC
 
 面向 OxygenOS / ColorOS 的 NFC UID 模拟与诊断工具。应用通过 LSPosed 在系统 NFC 进程中发现并验证 RF 配置写入路径，以真实的原生返回结果判断模拟是否生效。
 

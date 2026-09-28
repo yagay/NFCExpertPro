@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.yagay.nfcdoorcard"
+    namespace = "com.yagay.YNFC"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.yagay.nfcdoorcard"
+        applicationId = "com.yagay.YNFC"
         minSdk = 31
         targetSdk = 35
         versionCode = 57
@@ -18,7 +18,7 @@ android {
         // Runtime protocol v7; hook build 40; 1.0.56 separates UI/command/Provider boundaries
         // and gives late exact RF replay one bounded chance before lifecycle failure publication.
         // Controller lifecycle/epoch, verified native proof, reversible STOP and restart fallback remain intact.
-        // Application ID, source namespace, Provider authority and LSPosed entry all use com.yagay.nfcdoorcard.
+        // Application ID, source namespace, Provider authority and LSPosed entry all use com.yagay.YNFC.
         buildConfigField("int", "HOOK_BUILD", "40")
     }
 

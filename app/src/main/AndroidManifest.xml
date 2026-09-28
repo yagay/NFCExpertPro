@@ -22,7 +22,7 @@
 
         <provider
             android:name=".ConfigProvider"
-            android:authorities="com.yagay.nfcdoorcard.config"
+            android:authorities="com.yagay.YNFC.config"
             android:directBootAware="true"
             android:exported="true" />
 
