@@ -46,6 +46,6 @@ final class HookConfigStore {
     }
 
     private static Uri configUri() {
-        return Uri.parse("content://com.yagay.YNFC.config/settings");
+        return Uri.parse("content://" + com.yagay.YNFC.BuildConfig.CONFIG_AUTHORITY + "/settings");
     }
 }

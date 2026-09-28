@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 final class HookStateWriter {
     private static final String TAG = "NfcUIDSim";
     private static final Uri CONFIG_URI =
-            Uri.parse("content://com.yagay.YNFC.config/settings");
+            Uri.parse("content://" + com.yagay.YNFC.BuildConfig.CONFIG_AUTHORITY + "/settings");
     private final ExecutorService executor = Executors.newSingleThreadExecutor(
             runnable -> NfcHookUtils.daemon(runnable, "NfcUIDSim-StateSync"));
 

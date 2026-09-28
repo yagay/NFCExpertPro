@@ -14,7 +14,7 @@ import android.util.Log
 class ConfigProvider : ContentProvider() {
     private lateinit var devicePrefs: SharedPreferences
     companion object {
-        const val AUTHORITY = "com.yagay.YNFC.config"
+        val AUTHORITY = BuildConfig.CONFIG_AUTHORITY
         const val PATH_SETTINGS = "settings"
         private const val PREFS_NAME = "nfc_config"
         private const val ANDROID_NFC_UID = 1027

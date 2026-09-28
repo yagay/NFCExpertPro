@@ -16,7 +16,7 @@ import java.util.Map;
 
 /** Persists and validates the verified RF_CONFIG_WRITE target against the exact runtime. */
 public final class HookProfileStore {
-    private static final Uri CONFIG_URI = Uri.parse("content://com.yagay.YNFC.config/settings");
+    private static final Uri CONFIG_URI = Uri.parse("content://" + com.yagay.YNFC.BuildConfig.CONFIG_AUTHORITY + "/settings");
     private static final int PROFILE_SCHEMA = 3;
 
     public void save(Application app, HookTarget target, String status) {

@@ -14,4 +14,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "YNFC"
-include(":app")
+include(":app", ":feature")

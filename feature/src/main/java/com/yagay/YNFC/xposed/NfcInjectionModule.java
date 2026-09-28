@@ -35,7 +35,7 @@ import io.github.libxposed.api.XposedModuleInterface;
 public class NfcInjectionModule extends XposedModule {
     private static final String TAG = "NfcUIDSim";
     private static final int HOOK_BUILD = BuildConfig.HOOK_BUILD;
-    private static final Uri CONFIG_URI = Uri.parse("content://com.yagay.YNFC.config/settings");
+    private static final Uri CONFIG_URI = Uri.parse("content://" + com.yagay.YNFC.BuildConfig.CONFIG_AUTHORITY + "/settings");
     private static final int MAX_LEARNING_HOOKS = 4;
     private static final int MAX_TRIGGER_HOOKS = 4;
     private static final long TRIGGER_RF_WINDOW_MS = 3_000L;
