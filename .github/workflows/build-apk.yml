@@ -31,13 +31,13 @@ jobs:
             echo "Legacy package identity remains in tracked files" >&2
             exit 1
           fi
-          if find app/src -path "*$LEGACY_PATH*" -print -quit | grep -q .; then
+          if find feature/src -path "*$LEGACY_PATH*" -print -quit | grep -q .; then
             echo "Legacy package directory remains" >&2
             exit 1
           fi
-          test -d app/src/main/java/com/yagay/YNFC
-          test -d app/src/test/java/com/yagay/YNFC
-          grep -Fq 'namespace = "com.yagay.YNFC"' app/build.gradle.kts
+          test -d feature/src/main/java/com/yagay/YNFC
+          test -d feature/src/test/java/com/yagay/YNFC
+          grep -Fq 'namespace = "com.yagay.YNFC"' feature/build.gradle.kts
           grep -Fq 'applicationId = "com.yagay.YNFC"' app/build.gradle.kts
 
       - name: Set up JDK 17
@@ -68,7 +68,7 @@ jobs:
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon \
-            :app:testDebugUnitTest \
+            :feature:testDebugUnitTest \
             :app:assembleDebug \
             :app:lintDebug \
             :app:assembleRelease \
