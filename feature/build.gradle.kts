@@ -18,6 +18,7 @@ android {
         buildConfigField("int", "HOOK_BUILD", "40")
         buildConfigField("String", "CONFIG_AUTHORITY", "\"$configAuthority\"")
         manifestPlaceholders["ynfcConfigAuthority"] = configAuthority
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     compileOptions {
