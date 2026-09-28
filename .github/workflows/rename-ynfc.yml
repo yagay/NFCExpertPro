@@ -99,7 +99,7 @@ jobs:
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git rm .github/workflows/rename-ynfc.yml
+          git rm -f .github/workflows/rename-ynfc.yml
           git add -A
           git diff --cached --check
           git commit -m 'Rename NFC project and package to YNFC'
