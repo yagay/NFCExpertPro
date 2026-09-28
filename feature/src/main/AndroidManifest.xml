@@ -5,7 +5,6 @@
     <application>
         <activity
             android:name="com.yagay.YNFC.MainActivity"
-            android:exported="false"
             android:theme="@style/AppTheme" />
         <provider
             android:name="com.yagay.YNFC.ConfigProvider"
