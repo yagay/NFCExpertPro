@@ -43,10 +43,9 @@ configurations.configureEach {
 }
 
 dependencies {
-    implementation("com.github.yagay:YSuite:main-SNAPSHOT")
+    implementation("com.github.yagay.YSuite:ui:main-SNAPSHOT")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("com.google.code.gson:gson:2.11.0")
     compileOnly("io.github.libxposed:api:102.0.0")
-    debugImplementation("androidx.compose.ui:ui-tooling")
     testImplementation("junit:junit:4.13.2")
 }
