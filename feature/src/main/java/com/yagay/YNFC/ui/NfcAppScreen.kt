@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yagay.YNFC.*
+import com.yagay.yui.YScaffold
 
 /** Stateless Activity boundary for the complete NFC screen; operation state stays screen-local. */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NfcAppScreen(
     cards: List<CardModel>,
@@ -67,17 +67,7 @@ fun NfcAppScreen(
         }
     }
 
-    Scaffold(
-        contentWindowInsets = WindowInsets.safeDrawing,
-        topBar = {
-            TopAppBar(
-                title = { Text("YNFC ${BuildConfig.VERSION_NAME}") },
-                windowInsets = WindowInsets.safeDrawing.only(
-                    WindowInsetsSides.Top + WindowInsetsSides.Horizontal
-                )
-            )
-        }
-    ) { padding ->
+    YScaffold(title = "YNFC ${BuildConfig.VERSION_NAME}") { padding ->
         LazyColumn(
             modifier = Modifier.padding(padding).fillMaxSize(),
             contentPadding = PaddingValues(bottom = 12.dp)
