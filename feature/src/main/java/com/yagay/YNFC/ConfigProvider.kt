@@ -11,7 +11,8 @@ import android.os.Bundle
 import android.os.Process
 import android.util.Log
 
-class ConfigProvider : ContentProvider() {
+/** Protocol implementation shared by standalone YNFC and the YSuite-owned provider wrapper. */
+open class ConfigProvider : ContentProvider() {
     private lateinit var devicePrefs: SharedPreferences
     companion object {
         val AUTHORITY = BuildConfig.CONFIG_AUTHORITY
@@ -235,7 +236,6 @@ class ConfigProvider : ContentProvider() {
             .putInt(KEY_STATE_SCHEMA, STATE_SCHEMA_VERSION)
             .apply()
     }
-
 
     @Synchronized
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle {
