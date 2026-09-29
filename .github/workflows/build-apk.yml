@@ -53,7 +53,7 @@ jobs:
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           test -x "$SDKMANAGER"
           yes | "$SDKMANAGER" --licenses >/dev/null 2>&1 || true
-          "$SDKMANAGER" "platforms;android-35" "build-tools;35.0.0"
+          "$SDKMANAGER" --channel=3 "platforms;android-37.0" "build-tools;36.0.0"
 
       - name: Restore persistent debug signing key
         uses: actions/cache@v4
@@ -92,12 +92,12 @@ jobs:
             grep -Fxq 'META-INF/xposed/scope.list' <<< "$CONTENTS"
             test "$(unzip -p "$apk" META-INF/xposed/java_init.list)" = 'com.yagay.YNFC.xposed.NfcInjectionModule'
             test "$(unzip -p "$apk" META-INF/xposed/scope.list)" = 'com.android.nfc'
-            BADGING=$("$ANDROID_HOME/build-tools/35.0.0/aapt2" dump badging "$apk")
+            BADGING=$("$ANDROID_HOME/build-tools/36.0.0/aapt2" dump badging "$apk")
             grep -Fq "package: name='com.yagay.YNFC'" <<< "$BADGING"
             grep -Fq "versionCode='$EXPECTED_VERSION_CODE'" <<< "$BADGING"
             grep -Fq "versionName='$EXPECTED_VERSION_NAME'" <<< "$BADGING"
-            "$ANDROID_HOME/build-tools/35.0.0/zipalign" -c -p 4 "$apk"
-            "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$apk"
+            "$ANDROID_HOME/build-tools/36.0.0/zipalign" -c -p 4 "$apk"
+            "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$apk"
           done
 
       - name: Upload debug APK
