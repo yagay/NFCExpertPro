@@ -2,8 +2,6 @@ package com.yagay.YNFC
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,10 +15,9 @@ import com.yagay.YNFC.nfc.NfcReaderController
 import com.yagay.YNFC.system.NfcSystemService
 import com.yagay.YNFC.system.RootShell
 import com.yagay.YNFC.ui.NfcAppScreen
-import com.yagay.yui.YTheme
-import com.yagay.yui.YView
+import com.yagay.yui.YComposeActivity
 
-class MainActivity : ComponentActivity() {
+class MainActivity : YComposeActivity() {
     companion object { private const val EXPECTED_HOOK_BUILD = BuildConfig.HOOK_BUILD }
 
     private lateinit var nfcReader: NfcReaderController
@@ -35,8 +32,7 @@ class MainActivity : ComponentActivity() {
     private var savedCardsState by mutableStateOf<List<CardModel>>(emptyList())
     private var readModeEnabled by mutableStateOf(false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onBeforeYContent(savedInstanceState: Bundle?) {
         nfcReader = NfcReaderController(this)
         cardRepository = CardRepository(this)
         val rootShell = RootShell(this)
@@ -48,16 +44,15 @@ class MainActivity : ComponentActivity() {
         simulationCoordinator = SimulationCoordinator(configClient, runtimeRepository, nfcSystemService, EXPECTED_HOOK_BUILD)
         savedCardsState = cardRepository.load()
         AppLogger.i("NFC controller started; LSPosed in-process command engine enabled")
-        YView.applyComposeWindow(this)
-        setContent {
-            YTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    NfcAppContent()
-                }
-            }
+    }
+
+    @Composable
+    override fun YContent() {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background,
+        ) {
+            NfcAppContent()
         }
     }
 
@@ -139,7 +134,7 @@ class MainActivity : ComponentActivity() {
                 savedCardsState = savedCardsState.filterNot { it.uid.equals(card.uid, true) }
                 cardRepository.save(savedCardsState)
             },
-            onExportLogs = ::saveDiagnosticWithoutSharing
+            onExportLogs = ::saveDiagnosticWithoutSharing,
         )
     }
 
@@ -179,5 +174,4 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
 }
