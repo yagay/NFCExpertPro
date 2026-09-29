@@ -38,12 +38,10 @@ android {
     }
 }
 
-configurations.configureEach {
-    resolutionStrategy.cacheChangingModulesFor(0, "seconds")
-}
-
 dependencies {
-    implementation("com.github.yagay.YSuite:ui:main-SNAPSHOT")
+    implementation("com.github.yagay.YSuite:ui") {
+        version { branch = "main" }
+    }
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("com.google.code.gson:gson:2.11.0")
     compileOnly("io.github.libxposed:api:102.0.0")
