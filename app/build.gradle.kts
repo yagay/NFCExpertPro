@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.yagay.YNFC.standalone"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.yagay.YNFC"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 37
         versionCode = 57
         versionName = "1.0.56"
         manifestPlaceholders["ynfcConfigAuthority"] = "com.yagay.YNFC.config"
