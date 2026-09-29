@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +17,8 @@ import com.yagay.YNFC.nfc.NfcReaderController
 import com.yagay.YNFC.system.NfcSystemService
 import com.yagay.YNFC.system.RootShell
 import com.yagay.YNFC.ui.NfcAppScreen
+import com.yagay.yui.YTheme
+import com.yagay.yui.YView
 
 class MainActivity : ComponentActivity() {
     companion object { private const val EXPECTED_HOOK_BUILD = BuildConfig.HOOK_BUILD }
@@ -50,11 +48,9 @@ class MainActivity : ComponentActivity() {
         simulationCoordinator = SimulationCoordinator(configClient, runtimeRepository, nfcSystemService, EXPECTED_HOOK_BUILD)
         savedCardsState = cardRepository.load()
         AppLogger.i("NFC controller started; LSPosed in-process command engine enabled")
-        enableEdgeToEdge()
+        YView.applyComposeWindow(this)
         setContent {
-            val darkTheme = isSystemInDarkTheme()
-            val colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
-            MaterialTheme(colorScheme = colorScheme) {
+            YTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
