@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
 }
 
+val ciArm64Only = providers.gradleProperty("ciArm64Only").orNull == "true"
+
 android {
     namespace = "com.yagay.YNFC.standalone"
     compileSdk = 37
@@ -13,6 +15,13 @@ android {
         versionCode = 57
         versionName = "1.0.56"
         manifestPlaceholders["ynfcConfigAuthority"] = "com.yagay.YNFC.config"
+
+        if (ciArm64Only) {
+            ndk {
+                abiFilters.clear()
+                abiFilters += "arm64-v8a"
+            }
+        }
     }
 
     buildTypes {
