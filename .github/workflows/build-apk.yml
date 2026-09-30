@@ -64,15 +64,18 @@ jobs:
       - name: Set up Gradle cache
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Unit tests, build and lint
+      - name: Unit tests, arm64-v8a debug build and lint
         run: |
           chmod +x ./gradlew
           ./gradlew --no-daemon \
+            -PciArm64Only=true \
             :feature:testDebugUnitTest \
             :app:assembleDebug \
             :app:lintDebug \
-            :app:assembleRelease \
             --stacktrace
+
+      - name: Build release APK
+        run: ./gradlew --no-daemon :app:assembleRelease --stacktrace
 
       - name: Verify APK files and Xposed metadata
         run: |
@@ -85,6 +88,13 @@ jobs:
           test -n "$EXPECTED_VERSION_NAME"
           test -f "$DEBUG_APK"
           test -f "$RELEASE_APK"
+
+          DEBUG_ABIS="$(unzip -Z1 "$DEBUG_APK" | sed -n 's#^lib/\([^/]*\)/.*#\1#p' | sort -u)"
+          if [ -n "$DEBUG_ABIS" ] && [ "$DEBUG_ABIS" != "arm64-v8a" ]; then
+            echo "Unexpected debug ABIs: $DEBUG_ABIS" >&2
+            exit 1
+          fi
+
           for apk in "$DEBUG_APK" "$RELEASE_APK"; do
             CONTENTS=$(unzip -Z1 "$apk")
             grep -Fxq 'META-INF/xposed/java_init.list' <<< "$CONTENTS"
@@ -100,11 +110,17 @@ jobs:
             "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify --verbose "$apk"
           done
 
+      - name: Prepare fixed debug APK name
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          cp app/build/outputs/apk/debug/app-debug.apk artifacts/YNFC-debug-arm64-v8a.apk
+
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: ynfc-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: YNFC-debug-arm64-v8a
+          path: artifacts/YNFC-debug-arm64-v8a.apk
           if-no-files-found: error
 
       - name: Upload release APK
